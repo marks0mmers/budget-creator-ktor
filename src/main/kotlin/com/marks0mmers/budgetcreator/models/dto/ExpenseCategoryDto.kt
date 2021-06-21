@@ -8,14 +8,12 @@ import kotlinx.serialization.Serializable
  *
  * @property id The id of the category
  * @property name The name of the category
- * @property description The description of the category
  * @property subCategories The list of sub-categories
  */
 @Serializable
 data class ExpenseCategoryDto(
     val id: Int,
     val name: String,
-    val description: String,
     val subCategories: List<ExpenseSubCategoryDto>
 ) {
     /**
@@ -25,7 +23,6 @@ data class ExpenseCategoryDto(
     constructor(expenseCategory: ExpenseCategory) : this(
         expenseCategory.id.value,
         expenseCategory.name,
-        expenseCategory.description,
         expenseCategory.subCategories.map { ExpenseSubCategoryDto(it) }
     )
 }

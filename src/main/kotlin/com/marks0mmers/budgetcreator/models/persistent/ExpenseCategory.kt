@@ -2,6 +2,7 @@ package com.marks0mmers.budgetcreator.models.persistent
 
 import com.marks0mmers.budgetcreator.models.dto.ExpenseCategoryDto
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseSubCategory.ExpenseSubCategories
+import com.marks0mmers.budgetcreator.models.persistent.User.Users
 import com.marks0mmers.budgetcreator.models.types.DtoConvertible
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
@@ -23,8 +24,8 @@ class ExpenseCategory(id: EntityID<Int>) : IntEntity(id), DtoConvertible<Expense
     object ExpenseCategories : IntIdTable("expense_categories") {
         /** The name of the expense category */
         val name = varchar("name", 50)
-        /** The description of the expense category */
-        val description = varchar("description", 4000)
+        /** The user that owns the expense category */
+        val userId = reference("user_id", Users)
     }
 
     /** The companion object that allows for the query DSL */
@@ -32,8 +33,8 @@ class ExpenseCategory(id: EntityID<Int>) : IntEntity(id), DtoConvertible<Expense
 
     /** The name of the expense category */
     var name by ExpenseCategories.name
-    /** The description of the expense category */
-    var description by ExpenseCategories.description
+    /** The user that owns the expense category */
+    var user by User referencedOn ExpenseCategories.userId
     /** The list of sub-categories that belong to this category */
     val subCategories by ExpenseSubCategory referrersOn ExpenseSubCategories.expenseCategoryId
 

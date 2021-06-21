@@ -8,7 +8,7 @@ import kotlinx.serialization.Serializable
  *
  * @property id The id of the budget
  * @property title The title of the budget
- * @property primaryUserId The primary user of the budget
+ * @property userId The primary user of the budget
  * @property incomeSources The list of income sources for the budget
  * @property expenseSources The list of expense sources for the budget
  */
@@ -16,7 +16,7 @@ import kotlinx.serialization.Serializable
 data class BudgetDto(
     val id: Int,
     val title: String,
-    val primaryUserId: Int,
+    val userId: Int,
     val incomeSources: List<IncomeSourceDto>,
     val expenseSources: List<ExpenseSourceDto>
 ) {
@@ -27,7 +27,7 @@ data class BudgetDto(
     constructor(budget: Budget) : this(
         budget.id.value,
         budget.title,
-        budget.primaryUser.id.value,
+        budget.user.id.value,
         budget.incomeSources.map(::IncomeSourceDto),
         budget.expenseSources.map(::ExpenseSourceDto)
     )

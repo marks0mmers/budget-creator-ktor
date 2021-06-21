@@ -1,6 +1,6 @@
 package com.marks0mmers.budgetcreator.services
 
-import com.marks0mmers.budgetcreator.models.dto.ExpenseSubCategoryDto
+import com.marks0mmers.budgetcreator.models.dto.ExpenseCategoryDto
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseSubCategory
 import com.marks0mmers.budgetcreator.models.views.ExpenseCategorySubmissionView
 import com.marks0mmers.budgetcreator.repositories.ExpenseSubCategoryRepository
@@ -29,7 +29,7 @@ object ExpenseSubCategoryService {
     suspend fun addExpenseSubCategoryToExpenseCategory(
         expenseCategoryId: Int,
         expenseSubCategory: ExpenseCategorySubmissionView
-    ): ExpenseSubCategoryDto {
+    ): ExpenseCategoryDto {
         return expenseSubCategoryRepository.create(expenseCategoryId, expenseSubCategory)
             ?: fail("Cannot find Expense Category $expenseCategoryId", NotFound)
     }
@@ -41,7 +41,7 @@ object ExpenseSubCategoryService {
      * @return The removed expense sub-category
      * @throws BudgetCreatorException If the expense sub-category cannot be found
      */
-    suspend fun removeExpenseSubCategoryFromExpenseCategory(expenseSubCategoryId: Int): ExpenseSubCategoryDto {
+    suspend fun removeExpenseSubCategoryFromExpenseCategory(expenseSubCategoryId: Int): ExpenseCategoryDto {
         return expenseSubCategoryRepository.delete(expenseSubCategoryId)
             ?: fail("Cannot find Expense Sub-Category $expenseSubCategoryId", NotFound)
     }
@@ -57,7 +57,7 @@ object ExpenseSubCategoryService {
     suspend fun updateExpenseSubCategory(
         expenseSubCategoryId: Int,
         expenseSubCategory: ExpenseCategorySubmissionView
-    ): ExpenseSubCategoryDto {
+    ): ExpenseCategoryDto {
         return expenseSubCategoryRepository.update(expenseSubCategoryId, expenseSubCategory)
             ?: fail("Cannot find Expense Sub-Category $expenseSubCategoryId", NotFound)
     }

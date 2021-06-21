@@ -26,7 +26,7 @@ class Budget(id: EntityID<Int>) : IntEntity(id), DtoConvertible<BudgetDto> {
         /** The title of the budget */
         val title = varchar("title", 100)
         /** The primary user of the budget */
-        val primaryUserId = reference("primary_user_id", Users)
+        val userId = reference("user_id", Users)
     }
 
     /** The companion object that allows for the query DSL */
@@ -35,7 +35,7 @@ class Budget(id: EntityID<Int>) : IntEntity(id), DtoConvertible<BudgetDto> {
     /** The title of the budget */
     var title by Budgets.title
     /** The primary user of the budget */
-    var primaryUser by User referencedOn Budgets.primaryUserId
+    var user by User referencedOn Budgets.userId
     /** The list of income sources of the budget */
     val incomeSources by IncomeSource referrersOn IncomeSources.budgetId
     /** The list of expense sources of the budget */

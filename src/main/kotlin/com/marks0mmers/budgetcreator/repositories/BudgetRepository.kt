@@ -21,7 +21,7 @@ object BudgetRepository {
      * @return The list of budgets
      */
     suspend fun findAllByUsername(userId: Int) = newSuspendedTransaction {
-        Budget.find { Budgets.primaryUserId eq userId }.map { it.toDto() }
+        Budget.find { Budgets.userId eq userId }.map { it.toDto() }
     }
 
     suspend fun findById(budgetId: Int) = newSuspendedTransaction {
@@ -39,7 +39,7 @@ object BudgetRepository {
         val user = User.findById(userId) ?: fail("Cannot find user $userId")
         Budget.new {
             title = budget.title
-            primaryUser = user
+            this.user = user
         }.toDto()
     }
 

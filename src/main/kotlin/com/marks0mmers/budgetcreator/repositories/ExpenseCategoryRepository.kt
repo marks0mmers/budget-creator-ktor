@@ -1,7 +1,10 @@
 package com.marks0mmers.budgetcreator.repositories
 
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseCategory
+import com.marks0mmers.budgetcreator.models.persistent.ExpenseCategory.ExpenseCategories
+import com.marks0mmers.budgetcreator.models.persistent.User
 import com.marks0mmers.budgetcreator.models.views.ExpenseCategorySubmissionView
+import com.marks0mmers.budgetcreator.util.fail
 import kotlinx.coroutines.flow.asFlow
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
@@ -17,8 +20,8 @@ object ExpenseCategoryRepository {
      *
      * @return The list of expense categories
      */
-    suspend fun findAll() = newSuspendedTransaction {
-        ExpenseCategory.all().map { it.toDto() }.asFlow()
+    suspend fun findAllByUser(userId: Int) = newSuspendedTransaction {
+        ExpenseCategory.find { ExpenseCategories.userId eq userId }.map { it.toDto() }
     }
 
     /**
@@ -27,10 +30,11 @@ object ExpenseCategoryRepository {
      * @param ec The expense category to create
      * @return The created expense category
      */
-    suspend fun create(ec: ExpenseCategorySubmissionView) = newSuspendedTransaction {
+    suspend fun create(ec: ExpenseCategorySubmissionView, userId: Int) = newSuspendedTransaction {
+        val user = User.findById(userId) ?: fail("Cannot find user $userId")
         ExpenseCategory.new {
             name = ec.name
-            description = ec.description
+            this.user = user
         }.toDto()
     }
 
@@ -44,7 +48,6 @@ object ExpenseCategoryRepository {
     suspend fun update(expenseCategoryId: Int, expenseCategorySubmission: ExpenseCategorySubmissionView) = newSuspendedTransaction {
         ExpenseCategory.findById(expenseCategoryId)?.apply {
             name = expenseCategorySubmission.name
-            description = expenseCategorySubmission.description
         }?.toDto()
     }
 

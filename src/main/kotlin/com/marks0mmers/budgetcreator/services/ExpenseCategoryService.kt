@@ -23,9 +23,9 @@ object ExpenseCategoryService {
      *
      * @return The list of expense categories
      */
-    suspend fun getExpenseCategories(): Flow<ExpenseCategoryDto> {
+    suspend fun getExpenseCategoriesForUser(userId: Int): List<ExpenseCategoryDto> {
         return expenseCategoryRepository
-            .findAll()
+            .findAllByUser(userId)
     }
 
     /**
@@ -34,9 +34,9 @@ object ExpenseCategoryService {
      * @param ec The expense category to create
      * @return The created expense category
      */
-    suspend fun createExpenseCategory(ec: ExpenseCategorySubmissionView): ExpenseCategoryDto {
+    suspend fun createExpenseCategory(ec: ExpenseCategorySubmissionView, userId: Int): ExpenseCategoryDto {
         return expenseCategoryRepository
-            .create(ec)
+            .create(ec, userId)
     }
 
     /**

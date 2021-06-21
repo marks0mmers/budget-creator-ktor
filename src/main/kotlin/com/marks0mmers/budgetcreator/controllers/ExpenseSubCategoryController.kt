@@ -19,7 +19,7 @@ object ExpenseSubCategoryController {
      * The controller routes for the Expense sub-categories
      */
     fun Route.expenseSubCategoryRoutes() {
-        route("/expenseSubCategories") {
+        route("/expenseSubCategory") {
             post {
                 val body = call.receive<ExpenseCategorySubmissionView>()
                 val expenseCategoryId = call.parameters["expenseCategoryId"]?.toIntOrNull()

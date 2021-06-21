@@ -20,11 +20,10 @@ object ExpenseSubCategoryRepository {
      * @return The created expense sub-category
      */
     suspend fun create(expenseCategoryId: Int, expenseSubCategory: ExpenseCategorySubmissionView) = newSuspendedTransaction {
-        ExpenseCategory.findById(expenseCategoryId)?.let { expenseCategory ->
+        ExpenseCategory.findById(expenseCategoryId)?.also { expenseCategory ->
             ExpenseSubCategory.new {
                 this.expenseCategory = expenseCategory
                 name = expenseSubCategory.name
-                description = expenseSubCategory.description
             }
         }?.toDto()
     }
@@ -39,8 +38,7 @@ object ExpenseSubCategoryRepository {
     suspend fun update(expenseSubCategoryId: Int, expenseSubCategory: ExpenseCategorySubmissionView) = newSuspendedTransaction {
         ExpenseSubCategory.findById(expenseSubCategoryId)?.apply {
             name = expenseSubCategory.name
-            description = expenseSubCategory.description
-        }?.toDto()
+        }?.expenseCategory?.toDto()
     }
 
     /**
@@ -50,6 +48,6 @@ object ExpenseSubCategoryRepository {
      * @return The deleted expense sub-category
      */
     suspend fun delete(expenseSubCategoryId: Int) = newSuspendedTransaction {
-        ExpenseSubCategory.findById(expenseSubCategoryId)?.apply { delete() }?.toDto()
+        ExpenseSubCategory.findById(expenseSubCategoryId)?.apply { delete() }?.expenseCategory?.toDto()
     }
 }

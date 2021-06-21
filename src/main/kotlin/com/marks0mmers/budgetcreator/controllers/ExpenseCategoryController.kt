@@ -1,11 +1,13 @@
 package com.marks0mmers.budgetcreator.controllers
 
 import com.marks0mmers.budgetcreator.controllers.ExpenseSubCategoryController.expenseSubCategoryRoutes
+import com.marks0mmers.budgetcreator.models.dto.UserDto
 import com.marks0mmers.budgetcreator.models.views.ExpenseCategorySubmissionView
 import com.marks0mmers.budgetcreator.services.ExpenseCategoryService
 import com.marks0mmers.budgetcreator.util.fail
 import io.ktor.application.*
 import io.ktor.auth.*
+import io.ktor.http.*
 import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
@@ -24,13 +26,19 @@ object ExpenseCategoryController {
         authenticate {
             route("/expenseCategories") {
                 get {
-                    val expenseCategories = expenseCategoryService.getExpenseCategories()
+                    val user = call.principal<UserDto>() ?: fail("Cannot get user from request",
+                        HttpStatusCode.Unauthorized
+                    )
+                    val expenseCategories = expenseCategoryService.getExpenseCategoriesForUser(user.id)
                     call.respond(expenseCategories)
                 }
 
                 post {
+                    val user = call.principal<UserDto>() ?: fail("Cannot get user from request",
+                        HttpStatusCode.Unauthorized
+                    )
                     val body = call.receive<ExpenseCategorySubmissionView>()
-                    val createdExpenseCategory = expenseCategoryService.createExpenseCategory(body)
+                    val createdExpenseCategory = expenseCategoryService.createExpenseCategory(body, user.id)
                     call.respond(createdExpenseCategory)
                 }
 

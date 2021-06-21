@@ -23,8 +23,6 @@ class ExpenseSubCategory(id: EntityID<Int>) : IntEntity(id), DtoConvertible<Expe
     object ExpenseSubCategories : IntIdTable("expense_sub_categories") {
         /** The name of the expense sub-category */
         val name = varchar("name", 50)
-        /** The description of the expense sub-category */
-        val description = varchar("description", 4000)
         /** The category that this sub-category is attached to */
         val expenseCategoryId = reference("expense_category_id", ExpenseCategories)
     }
@@ -34,8 +32,6 @@ class ExpenseSubCategory(id: EntityID<Int>) : IntEntity(id), DtoConvertible<Expe
 
     /** The name of the expense sub-category */
     var name by ExpenseSubCategories.name
-    /** The description of the expense sub-category */
-    var description by ExpenseSubCategories.description
     /** The category that this sub-category is attached to */
     var expenseCategory by ExpenseCategory referencedOn ExpenseSubCategories.expenseCategoryId
 
