@@ -26,7 +26,7 @@ object ExpenseSourceRepository {
         val expenseCategory = ExpenseCategory.findById(expenseSource.categoryId)?.load(ExpenseCategory::subCategories)
             ?: fail("Cannot find expense category ${expenseSource.categoryId}")
 
-        Budget.findById(budgetId)?.let { budget ->
+        Budget.findById(budgetId)?.also { budget ->
             ExpenseSource.new {
                 name = expenseSource.name
                 amount = expenseSource.amount
@@ -53,7 +53,7 @@ object ExpenseSourceRepository {
             amount = expenseSource.amount
             category = expenseCategory
             subCategory = expenseCategory.subCategories.find { it.id.value == expenseSource.subCategoryId }
-        }?.toDto()
+        }?.budget?.toDto()
     }
 
     /**
@@ -63,6 +63,6 @@ object ExpenseSourceRepository {
      * @return The deleted expense source
      */
     suspend fun delete(expenseSourceId: Int) = newSuspendedTransaction {
-        ExpenseSource.findById(expenseSourceId)?.apply { delete() }?.toDto()
+        ExpenseSource.findById(expenseSourceId)?.apply { delete() }?.budget?.toDto()
     }
 }

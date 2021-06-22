@@ -1,5 +1,6 @@
 package com.marks0mmers.budgetcreator.services
 
+import com.marks0mmers.budgetcreator.models.dto.BudgetDto
 import com.marks0mmers.budgetcreator.models.dto.ExpenseSourceDto
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseSource
 import com.marks0mmers.budgetcreator.models.views.ExpenseSourceSubmissionView
@@ -26,7 +27,7 @@ object ExpenseSourceService {
      * @return The added expense source
      * @throws BudgetCreatorException If the budget cannot be found
      */
-    suspend fun addExpenseSourceToBudget(budgetId: Int, expenseSource: ExpenseSourceSubmissionView): ExpenseSourceDto {
+    suspend fun addExpenseSourceToBudget(budgetId: Int, expenseSource: ExpenseSourceSubmissionView): BudgetDto {
         return expenseSourceRepository.create(budgetId, expenseSource)
             ?: fail("Cannot find budget $budgetId", NotFound)
     }
@@ -38,7 +39,7 @@ object ExpenseSourceService {
      * @return The removed expense source
      * @throws BudgetCreatorException If the expense source cannot be found
      */
-    suspend fun removeExpenseSourceFromBudget(expenseSourceId: Int): ExpenseSourceDto {
+    suspend fun removeExpenseSourceFromBudget(expenseSourceId: Int): BudgetDto {
         return expenseSourceRepository.delete(expenseSourceId)
             ?: fail("Cannot find Expense Source $expenseSourceId", NotFound)
     }
@@ -54,7 +55,7 @@ object ExpenseSourceService {
     suspend fun updateExpenseSource(
         expenseSourceId: Int,
         expenseSource: ExpenseSourceSubmissionView
-    ): ExpenseSourceDto {
+    ): BudgetDto {
         return expenseSourceRepository.update(expenseSourceId, expenseSource)
             ?: fail("Cannot fid Expense Source $expenseSourceId", NotFound)
     }
