@@ -8,16 +8,9 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-/**
- * The API Controller for Expense Source Functionality
- */
 object ExpenseSourceController {
-    /** The expense source service containing business logic */
     private val expenseSourceService = ExpenseSourceService
 
-    /**
-     * The Controller routes for expense sources
-     */
     fun Route.expenseSourceRoutes() {
         route("/expenseSource") {
             post {

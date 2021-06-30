@@ -8,45 +8,19 @@ import com.marks0mmers.budgetcreator.util.fail
 import com.marks0mmers.budgetcreator.util.BudgetCreatorException
 import kotlinx.coroutines.flow.Flow
 
-/**
- * The Service layer responsible for handling [ExpenseCategory] functionality
- *
- * @author Mark Sommers
- */
 object ExpenseCategoryService {
-
-    /** The expense category Postgres Repository */
     private val expenseCategoryRepository = ExpenseCategoryRepository
 
-    /**
-     * Gets all the expense categories
-     *
-     * @return The list of expense categories
-     */
     suspend fun getExpenseCategoriesForUser(userId: Int): List<ExpenseCategoryDto> {
         return expenseCategoryRepository
             .findAllByUser(userId)
     }
 
-    /**
-     * Creates an expense category
-     *
-     * @param ec The expense category to create
-     * @return The created expense category
-     */
     suspend fun createExpenseCategory(ec: ExpenseCategorySubmissionView, userId: Int): ExpenseCategoryDto {
         return expenseCategoryRepository
             .create(ec, userId)
     }
 
-    /**
-     * Updates the expense category
-     *
-     * @param expenseCategoryId The expense category ID to update
-     * @param expenseCategorySubmission The new values to set on the expense category
-     * @return The updated expense category
-     * @throws BudgetCreatorException If the expense category cannot be found
-     */
     suspend fun updateExpenseCategory(
         expenseCategoryId: Int,
         expenseCategorySubmission: ExpenseCategorySubmissionView
@@ -56,12 +30,6 @@ object ExpenseCategoryService {
             ?: fail("Failed to update Expense Category $expenseCategoryId")
     }
 
-    /**
-     * Removes the expense category
-     *
-     * @param expenseCategoryId The expense category ID to remove
-     * @return The removed expense category
-     */
     suspend fun deleteExpenseCategory(expenseCategoryId: Int): ExpenseCategoryDto {
         return expenseCategoryRepository
             .delete(expenseCategoryId)

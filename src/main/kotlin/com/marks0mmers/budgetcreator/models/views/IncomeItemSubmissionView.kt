@@ -1,11 +1,12 @@
 package com.marks0mmers.budgetcreator.models.views
 
+import kotlinx.datetime.LocalDate
 import kotlinx.serialization.Serializable
 
 @Serializable
-data class ExpenseSourceSubmissionView(
+data class IncomeItemSubmissionView (
     val name: String,
     val amount: Double,
-    val categoryId: Int,
-    val subCategoryId: Int?
+    val dateTransacted: LocalDate,
+    val incomeSourceId: Int,
 )

@@ -12,16 +12,9 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-/**
- * The API controller for the Expense Category related functionality
- */
 object ExpenseCategoryController {
-    /** The expense category service containing business logic */
     private val expenseCategoryService = ExpenseCategoryService
 
-    /**
-     * The controller routes for expense categories
-     */
     fun Route.expenseCategoryRoutes() {
         authenticate {
             route("/expenseCategories") {

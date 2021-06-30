@@ -13,16 +13,9 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-/**
- * The API Controller for User related functionality
- */
 object UserController {
-    /** The User Service for Business Logic */
     private val userService = UserService
 
-    /**
-     * The routes for the user controller
-     */
     fun Route.userRoutes() {
         route("/users") {
             post {

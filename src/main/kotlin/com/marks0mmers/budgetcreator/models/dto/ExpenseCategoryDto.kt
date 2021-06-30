@@ -3,23 +3,12 @@ package com.marks0mmers.budgetcreator.models.dto
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseCategory
 import kotlinx.serialization.Serializable
 
-/**
- * The DTO that represents an ExpenseCategory
- *
- * @property id The id of the category
- * @property name The name of the category
- * @property subCategories The list of sub-categories
- */
 @Serializable
 data class ExpenseCategoryDto(
     val id: Int,
     val name: String,
     val subCategories: List<ExpenseSubCategoryDto>
 ) {
-    /**
-     * Creates a DTO based on the expense category entity
-     * @param expenseCategory The expense category entity to create from
-     */
     constructor(expenseCategory: ExpenseCategory) : this(
         expenseCategory.id.value,
         expenseCategory.name,

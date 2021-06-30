@@ -5,6 +5,8 @@ import com.marks0mmers.budgetcreator.config.JsonConfig.jsonConfig
 import com.marks0mmers.budgetcreator.config.JwtConfig.authConfig
 import com.marks0mmers.budgetcreator.controllers.BudgetController.budgetRoutes
 import com.marks0mmers.budgetcreator.controllers.ExpenseCategoryController.expenseCategoryRoutes
+import com.marks0mmers.budgetcreator.controllers.ExpenseItemController.expenseItemRoutes
+import com.marks0mmers.budgetcreator.controllers.IncomeItemController.incomeItemRoutes
 import com.marks0mmers.budgetcreator.controllers.UserController.userRoutes
 import com.marks0mmers.budgetcreator.db.DbConfig.dbConfig
 import io.ktor.application.*
@@ -27,6 +29,8 @@ fun Application.module() {
     routing {
         route("/api") {
             budgetRoutes()
+            incomeItemRoutes()
+            expenseItemRoutes()
             expenseCategoryRoutes()
             userRoutes()
         }

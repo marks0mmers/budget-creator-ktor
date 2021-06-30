@@ -13,16 +13,9 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-/**
- * The API Controller for Budget related Functionality
- */
 object BudgetController {
-    /** The budget service containing business logic */
     private val budgetService = BudgetService
 
-    /**
-     * The routes for the budget controller
-     */
     fun Route.budgetRoutes() {
         route("/budgets") {
             authenticate {

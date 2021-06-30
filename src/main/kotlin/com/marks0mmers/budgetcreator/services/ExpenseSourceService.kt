@@ -9,49 +9,19 @@ import com.marks0mmers.budgetcreator.util.BudgetCreatorException
 import com.marks0mmers.budgetcreator.util.fail
 import io.ktor.http.HttpStatusCode.Companion.NotFound
 
-/**
- * The Service layer responsible for handling [ExpenseSource] functionality
- *
- * @author Mark Sommers
- */
 object ExpenseSourceService {
-
-    /** The expense source Postgres Repository */
     private val expenseSourceRepository = ExpenseSourceRepository
 
-    /**
-     * Adds an expense source to a budget
-     *
-     * @param budgetId The budget to add the expense source to
-     * @param expenseSource The expense source to add
-     * @return The added expense source
-     * @throws BudgetCreatorException If the budget cannot be found
-     */
     suspend fun addExpenseSourceToBudget(budgetId: Int, expenseSource: ExpenseSourceSubmissionView): BudgetDto {
         return expenseSourceRepository.create(budgetId, expenseSource)
             ?: fail("Cannot find budget $budgetId", NotFound)
     }
 
-    /**
-     * Removes an expense source from a budget
-     *
-     * @param expenseSourceId The expense source to remove
-     * @return The removed expense source
-     * @throws BudgetCreatorException If the expense source cannot be found
-     */
     suspend fun removeExpenseSourceFromBudget(expenseSourceId: Int): BudgetDto {
         return expenseSourceRepository.delete(expenseSourceId)
             ?: fail("Cannot find Expense Source $expenseSourceId", NotFound)
     }
 
-    /**
-     * Updates an expense source
-     *
-     * @param expenseSourceId The expense source to update
-     * @param expenseSource The new values to set on an expense source
-     * @return The updated expense source
-     * @throws BudgetCreatorException If the expense source cannot be found
-     */
     suspend fun updateExpenseSource(
         expenseSourceId: Int,
         expenseSource: ExpenseSourceSubmissionView

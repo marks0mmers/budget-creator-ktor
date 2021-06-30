@@ -8,16 +8,9 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-/**
- * The API Controller for Income Source functionality
- */
 object IncomeSourceController {
-    /** The Income Source service for business logic functionality */
     private val incomeSourceService = IncomeSourceService
 
-    /**
-     * The API Routes for the Income Source Controller
-     */
     fun Route.incomeSourceRoutes() {
         route("/incomeSource") {
             post {

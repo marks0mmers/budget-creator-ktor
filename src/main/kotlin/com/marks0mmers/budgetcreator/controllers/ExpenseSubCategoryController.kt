@@ -8,16 +8,9 @@ import io.ktor.request.*
 import io.ktor.response.*
 import io.ktor.routing.*
 
-/**
- * The API Controller for Expense Sub-category functionality
- */
 object ExpenseSubCategoryController {
-    /** The expense sub-category service containing business logic */
     private val expenseSubCategoryService = ExpenseSubCategoryService
 
-    /**
-     * The controller routes for the Expense sub-categories
-     */
     fun Route.expenseSubCategoryRoutes() {
         route("/expenseSubCategory") {
             post {
