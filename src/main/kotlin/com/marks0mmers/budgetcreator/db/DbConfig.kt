@@ -13,7 +13,7 @@ object DbConfig {
         val db = HikariDataSource(HikariConfig().apply {
             driverClassName = "org.postgresql.Driver"
             jdbcUrl = environment.config.propertyOrNull("postgresql.connectionString")?.getString()
-            maximumPoolSize = 3
+            maximumPoolSize = environment.config.propertyOrNull("postgresql.threadPoolSize")?.getString()?.toIntOrNull() ?: 3
             isAutoCommit = false
             validate()
         })

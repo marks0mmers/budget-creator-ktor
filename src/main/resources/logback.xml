@@ -7,8 +7,11 @@
     </appender>
 
     <root level="info">
-        <!-- Add Console output for local dev -->
         <appender-ref ref="STDOUT"/>
     </root>
+
+<!--    <logger name="Exposed" level="debug">-->
+<!--        <appender-ref ref="STDOUT"/>-->
+<!--    </logger>-->
 
 </configuration>
