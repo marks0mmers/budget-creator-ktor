@@ -1,0 +1,25 @@
+version: '3.5'
+
+volumes:
+  PERSISTENT-postgres:
+
+services:
+  budget-creator-ktor:
+    build: .
+    container_name: budget-creator-ktor
+    depends_on:
+      - budget-creator-postgres
+    ports:
+      - 8000:8000
+    environment:
+      - CONNECTION_STRING=jdbc:postgresql://budget-creator-postgres:5432/budget-creator
+
+  budget-creator-postgres:
+    image: postgres
+    container_name: budget-creator-postgres
+    volumes:
+      - PERSISTENT-postgres:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=budget-creator
+      - POSTGRES_USER=postgres
+      - POSTGRES_PASSWORD=postgres

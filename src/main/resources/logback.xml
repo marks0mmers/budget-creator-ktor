@@ -10,8 +10,8 @@
         <appender-ref ref="STDOUT"/>
     </root>
 
-<!--    <logger name="Exposed" level="debug">-->
-<!--        <appender-ref ref="STDOUT"/>-->
-<!--    </logger>-->
+    <logger name="Exposed" level="debug">
+        <appender-ref ref="STDOUT"/>
+    </logger>
 
 </configuration>

@@ -22,4 +22,6 @@ data class IncomeItemDto(
         incomeItem.incomeSource.id.value,
         incomeItem.incomeSource.name
     )
+
+    fun isYearMonthEqual(date: LocalDate) = dateTransacted.year == date.year && dateTransacted.month == date.month
 }

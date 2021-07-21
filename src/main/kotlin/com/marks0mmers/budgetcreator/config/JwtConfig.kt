@@ -1,33 +1,40 @@
 package com.marks0mmers.budgetcreator.config
 
 import com.auth0.jwt.JWT
-import com.auth0.jwt.JWTVerifier
 import com.auth0.jwt.algorithms.Algorithm
 import com.marks0mmers.budgetcreator.models.dto.UserDto
 import com.marks0mmers.budgetcreator.services.UserService
 import io.ktor.application.*
 import io.ktor.auth.*
 import io.ktor.auth.jwt.*
-import java.time.Instant
+import kotlinx.datetime.Clock
+import kotlinx.datetime.DateTimeUnit
+import kotlinx.datetime.plus
+import kotlinx.datetime.toJavaInstant
 import java.util.*
 
 object JwtConfig {
     private const val secret = "zAP5MBA4B4Ijz0MZaS48"
     private const val issuer = "ktor.io"
     private const val validityInMs = 36_000_00 * 10
-    private val algorithm = Algorithm.HMAC512(secret)
 
-    private val verifier: JWTVerifier = JWT
+    private val algorithm = Algorithm.HMAC512(secret)
+    private val verifier = JWT
         .require(algorithm)
         .withIssuer(issuer)
         .build()
+
+    private val expiration
+        get() = Clock.System.now()
+            .plus(validityInMs, DateTimeUnit.MILLISECOND)
+            .toJavaInstant()
 
     fun UserDto.generateToken() {
         token = JWT.create()
             .withSubject("Authentication")
             .withIssuer(issuer)
             .withClaim("id", this.id)
-            .withExpiresAt(Date.from(getExpiration()))
+            .withExpiresAt(Date.from(expiration))
             .sign(algorithm)
     }
 
@@ -43,6 +50,4 @@ object JwtConfig {
             }
         }
     }
-
-    private fun getExpiration() = Instant.now().plusMillis(validityInMs.toLong())
 }

@@ -26,4 +26,6 @@ data class ExpenseItemDto(
         expenseItem.expenseSource.category.name,
         expenseItem.expenseSource.subCategory?.name
     )
+
+    fun isYearMonthEqual(date: LocalDate) = dateTransacted.year == date.year && dateTransacted.month == date.month
 }

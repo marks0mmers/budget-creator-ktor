@@ -1,13 +1,14 @@
 package com.marks0mmers.budgetcreator.db.migration
 
+import com.marks0mmers.budgetcreator.db.CustomMigration
 import com.marks0mmers.budgetcreator.models.persistent.*
-import org.flywaydb.core.api.migration.BaseJavaMigration
 import org.flywaydb.core.api.migration.Context
 import org.jetbrains.exposed.sql.SchemaUtils
 import org.jetbrains.exposed.sql.transactions.transaction
 
 @Suppress("unused")
-class V1__Create_Initial : BaseJavaMigration() {
+class `1CreateInitial` : CustomMigration(1, "Create Initial") {
+
     override fun migrate(context: Context?) {
         transaction {
             SchemaUtils.create(

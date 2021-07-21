@@ -1,21 +1,20 @@
 import org.jetbrains.kotlin.gradle.tasks.KotlinCompile
 
-val ktorVersion = "1.6.0"
+val ktorVersion = "1.6.1"
 val exposedVersion = "0.32.1"
-val jUnitJupiterVersion = "5.6.0"
-val ktorServerTestHostVersion = "1.3.2"
-val mockitoCoreVersion = "3.11.0"
-val logbackClassicVersion = "1.2.3"
-val ktorFlywayFeatureVersion = "1.2.2"
-val hikariCPVersion = "4.0.3"
-val flywayCoreVersion = "7.10.0"
+val jUnitJupiterVersion = "5.7.2"
+val mockkVersion = "1.12.0"
+val logbackClassicVersion = "1.2.4"
+val ktorFlywayFeatureVersion = "1.3.0"
+val hikariCPVersion = "5.0.0"
+val flywayCoreVersion = "7.11.3"
 val kotlinxDatetimeVersion = "0.2.1"
 val jbCryptVersion = "0.4"
-val postgresqlVersion = "42.2.20"
+val postgresqlVersion = "42.2.23"
 
 plugins {
-    kotlin("jvm") version "1.5.0"
-    kotlin("plugin.serialization") version "1.5.0"
+    kotlin("jvm") version "1.5.20"
+    kotlin("plugin.serialization") version "1.5.20"
     application
 }
 
@@ -23,18 +22,17 @@ group = "com.marks0mmers"
 version = "1.0-SNAPSHOT"
 
 repositories {
-    jcenter()
     mavenCentral()
 }
 
 dependencies {
     testImplementation(kotlin("test-junit5"))
     testImplementation( "org.junit.jupiter",        "junit-jupiter-api",        jUnitJupiterVersion)
-    testImplementation( "io.ktor",                  "ktor-server-test-host",    ktorServerTestHostVersion)
-    testImplementation( "org.mockito",              "mockito-core",             mockitoCoreVersion)
+    testImplementation( "io.ktor",                  "ktor-server-test-host",    ktorVersion)
+    testImplementation( "io.mockk",                 "mockk",                    mockkVersion)
     testRuntimeOnly(    "org.junit.jupiter",        "junit-jupiter-engine",     jUnitJupiterVersion)
 
-    implementation(     "io.ktor",                  "ktor-server-netty",        ktorVersion)
+    implementation(     "io.ktor",                  "ktor-server-cio",          ktorVersion)
     implementation(     "io.ktor",                  "ktor-serialization",       ktorVersion)
     implementation(     "io.ktor",                  "ktor-auth-jwt",            ktorVersion)
 
@@ -58,9 +56,9 @@ tasks.test {
 }
 
 tasks.withType<KotlinCompile> {
-    kotlinOptions.jvmTarget = "1.8"
+    kotlinOptions.jvmTarget = JavaVersion.VERSION_14.majorVersion
 }
 
 application {
-    mainClassName = "io.ktor.server.netty.EngineMain"
+    mainClass.set("io.ktor.server.cio.EngineMain")
 }
