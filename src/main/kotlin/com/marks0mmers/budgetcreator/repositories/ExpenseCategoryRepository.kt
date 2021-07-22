@@ -5,7 +5,6 @@ import com.marks0mmers.budgetcreator.models.persistent.ExpenseCategory.ExpenseCa
 import com.marks0mmers.budgetcreator.models.persistent.User
 import com.marks0mmers.budgetcreator.models.views.ExpenseCategorySubmissionView
 import com.marks0mmers.budgetcreator.util.fail
-import kotlinx.coroutines.flow.asFlow
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object ExpenseCategoryRepository {
