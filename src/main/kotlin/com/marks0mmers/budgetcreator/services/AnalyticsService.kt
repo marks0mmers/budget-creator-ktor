@@ -12,25 +12,31 @@ object AnalyticsService {
 
     suspend fun getPercentSourcesComplete(budgetId: Int, date: LocalDate): Map<String, PercentObjectView> {
         val budget = budgetRepository.findById(budgetId) ?: fail("Cannot find Budget ID: $budgetId")
-        val incomeItems = incomeItemRepository.findAllByBudgetId(budgetId)
-        val expenseItems = expenseItemRepository.findAllByBudgetId(budgetId)
+        val incomeItemTotalsBySource = incomeItemRepository.findAllByBudgetId(budgetId)
+            .filter { it.isYearMonthEqual(date) }
+            .groupBy(
+                keySelector = { it.incomeSourceId },
+                valueTransform = { it.amount }
+            )
+            .mapValues { it.value.sum() }
+        val expenseItemTotalsBySource = expenseItemRepository.findAllByBudgetId(budgetId)
+            .filter { it.isYearMonthEqual(date) }
+            .groupBy(
+                keySelector = { it.expenseSourceId },
+                valueTransform = { it.amount }
+            )
+            .mapValues { it.value.sum() }
 
         val incomePercentages = budget.incomeSources.associate { source ->
             source.name to PercentObjectView(
-                percent = incomeItems
-                    .filter { it.isYearMonthEqual(date) }
-                    .filter { it.incomeSourceId == source.id }
-                    .sumOf { it.amount } / source.amount * 100,
+                percent = incomeItemTotalsBySource[source.id]!! / source.amount * 100,
                 color = "green"
             )
         }
 
         val expensePercentages = budget.expenseSources.associate { source ->
             source.name to PercentObjectView(
-                percent = expenseItems
-                    .filter { it.isYearMonthEqual(date) }
-                    .filter { it.expenseSourceId == source.id }
-                    .sumOf { it.amount } / source.amount * 100,
+                percent = expenseItemTotalsBySource[source.id]!! / source.amount * 100,
                 color = "red"
             )
         }
@@ -43,7 +49,6 @@ object AnalyticsService {
         val incomeTotal = budget.incomeSources.sumOf { it.amount }
 
         return budget.expenseSources
-            .associateBy { it.subCategory?.name ?: it.category.name }
-            .mapValues { it.value.amount / incomeTotal }
+            .associate { (it.subCategory?.name ?: it.category.name) to it.amount / incomeTotal }
     }
 }

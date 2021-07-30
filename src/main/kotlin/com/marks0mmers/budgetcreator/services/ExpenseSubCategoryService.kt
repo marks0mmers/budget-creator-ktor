@@ -1,6 +1,7 @@
 package com.marks0mmers.budgetcreator.services
 
 import com.marks0mmers.budgetcreator.models.dto.ExpenseCategoryDto
+import com.marks0mmers.budgetcreator.models.dto.ExpenseSubCategoryDto
 import com.marks0mmers.budgetcreator.models.views.ExpenseCategorySubmissionView
 import com.marks0mmers.budgetcreator.repositories.ExpenseSubCategoryRepository
 import com.marks0mmers.budgetcreator.util.fail
@@ -8,6 +9,10 @@ import io.ktor.http.HttpStatusCode.Companion.NotFound
 
 object ExpenseSubCategoryService {
     private val expenseSubCategoryRepository = ExpenseSubCategoryRepository
+
+    suspend fun getExpenseSubCategoriesByExpenseCategory(expenseCategoryId: Int): List<ExpenseSubCategoryDto> {
+        return expenseSubCategoryRepository.findByExpenseCategory(expenseCategoryId)
+    }
 
     suspend fun addExpenseSubCategoryToExpenseCategory(
         expenseCategoryId: Int,

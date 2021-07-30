@@ -1,6 +1,7 @@
 package com.marks0mmers.budgetcreator
 
 import com.marks0mmers.budgetcreator.config.ErrorConfig.errorConfig
+import com.marks0mmers.budgetcreator.config.GraphQLConfig.graphQlConfig
 import com.marks0mmers.budgetcreator.config.JsonConfig.jsonConfig
 import com.marks0mmers.budgetcreator.config.JwtConfig.authConfig
 import com.marks0mmers.budgetcreator.controllers.AnalyticsController.analyticsRoutes
@@ -21,10 +22,16 @@ fun Application.module() {
     install(CallLogging) {
         level = Level.INFO
     }
+    install(CORS) {
+        anyHost()
+        allowCredentials = true
+        allowNonSimpleContentTypes = true
+    }
 
     authConfig()
     jsonConfig()
     errorConfig()
+    graphQlConfig()
 
     if (environment.config.propertyOrNull("postgresql") != null) {
         dbConfig()

@@ -18,7 +18,7 @@ object UserService {
     }
 
     suspend fun getUserByCredentials(username: String, password: String): UserDto {
-        val (user, hashedPassword) = userRepository.login(username)
+        val (user, hashedPassword) = userRepository.findByUsername(username)
         val newUser = if (BCrypt.checkpw(password, hashedPassword)) user?.apply { generateToken() } else null
         return newUser ?: fail("Invalid Credentials", Unauthorized)
     }

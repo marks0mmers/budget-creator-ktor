@@ -10,7 +10,7 @@ object BudgetService {
 
     suspend fun getAllBudgetItemsForUser(userId: Int): List<BudgetDto> {
         return budgetRepository
-            .findAllByUsername(userId)
+            .findAllByUserId(userId)
     }
 
     suspend fun createBudgetForUser(budget: BudgetSubmissionView, userId: Int): BudgetDto {

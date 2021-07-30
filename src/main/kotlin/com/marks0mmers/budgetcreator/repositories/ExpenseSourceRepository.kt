@@ -3,12 +3,17 @@ package com.marks0mmers.budgetcreator.repositories
 import com.marks0mmers.budgetcreator.models.persistent.Budget
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseCategory
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseSource
+import com.marks0mmers.budgetcreator.models.persistent.ExpenseSource.ExpenseSources
 import com.marks0mmers.budgetcreator.models.views.ExpenseSourceSubmissionView
 import com.marks0mmers.budgetcreator.util.fail
 import org.jetbrains.exposed.dao.load
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object ExpenseSourceRepository {
+    suspend fun findByBudget(budgetId: Int) = newSuspendedTransaction {
+        ExpenseSource.find { ExpenseSources.budgetId eq budgetId }.map { it.toDto() }
+    }
+
     suspend fun create(budgetId: Int, expenseSource: ExpenseSourceSubmissionView) = newSuspendedTransaction {
         val expenseCategory = ExpenseCategory.findById(expenseSource.categoryId)?.load(ExpenseCategory::subCategories)
             ?: fail("Cannot find expense category ${expenseSource.categoryId}")

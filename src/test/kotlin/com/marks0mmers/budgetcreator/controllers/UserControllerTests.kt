@@ -23,7 +23,6 @@ import kotlin.test.assertNotNull
 @TestInstance(TestInstance.Lifecycle.PER_CLASS)
 @ExperimentalSerializationApi
 internal class UserControllerTests : BaseTest() {
-
     @Test
     fun testCreateUser(): Unit = withTestApplication(Application::module) {
         val adminUser = userDto.copy(roles = userDto.roles + Role.ROLE_ADMIN)

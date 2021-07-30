@@ -12,7 +12,7 @@ object UserRepository {
         User.findById(id)?.toDto()
     }
 
-    suspend fun login(username: String) = newSuspendedTransaction {
+    suspend fun findByUsername(username: String) = newSuspendedTransaction {
         val user = User.find { Users.username eq username }.firstOrNull()
         user?.toDto() to user?.password
     }

@@ -2,10 +2,15 @@ package com.marks0mmers.budgetcreator.repositories
 
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseCategory
 import com.marks0mmers.budgetcreator.models.persistent.ExpenseSubCategory
+import com.marks0mmers.budgetcreator.models.persistent.ExpenseSubCategory.ExpenseSubCategories
 import com.marks0mmers.budgetcreator.models.views.ExpenseCategorySubmissionView
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object ExpenseSubCategoryRepository {
+    suspend fun findByExpenseCategory(expenseCategoryId: Int) = newSuspendedTransaction {
+        ExpenseSubCategory.find { ExpenseSubCategories.expenseCategoryId eq expenseCategoryId }.map { it.toDto() }
+    }
+
     suspend fun create(expenseCategoryId: Int, expenseSubCategory: ExpenseCategorySubmissionView) = newSuspendedTransaction {
         ExpenseCategory.findById(expenseCategoryId)?.also { expenseCategory ->
             ExpenseSubCategory.new {

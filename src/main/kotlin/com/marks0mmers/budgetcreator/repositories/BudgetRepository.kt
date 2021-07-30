@@ -8,12 +8,16 @@ import com.marks0mmers.budgetcreator.util.fail
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 
 object BudgetRepository {
-    suspend fun findAllByUsername(userId: Int) = newSuspendedTransaction {
+    suspend fun findAllByUserId(userId: Int) = newSuspendedTransaction {
         Budget.find { Budgets.userId eq userId }.map { it.toDto() }
     }
 
     suspend fun findById(budgetId: Int) = newSuspendedTransaction {
         Budget.findById(budgetId)?.toDto()
+    }
+
+    suspend fun findByTitle(title: String) = newSuspendedTransaction {
+        Budget.find { Budgets.title eq title }.map { it.toDto() }
     }
 
     suspend fun create(budget: BudgetSubmissionView, userId: Int) = newSuspendedTransaction {

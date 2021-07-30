@@ -11,6 +11,7 @@ val flywayCoreVersion = "7.11.3"
 val kotlinxDatetimeVersion = "0.2.1"
 val jbCryptVersion = "0.4"
 val postgresqlVersion = "42.2.23"
+val kGraphQLVersion = "0.17.11"
 
 plugins {
     kotlin("jvm") version "1.5.20"
@@ -41,6 +42,8 @@ dependencies {
     implementation(     "org.jetbrains.exposed",    "exposed-jdbc",             exposedVersion)
     implementation(     "org.jetbrains.exposed",    "exposed-java-time",        exposedVersion)
 
+    implementation(     "com.apurebase",            "kgraphql",                 kGraphQLVersion)
+    implementation(     "com.apurebase",            "kgraphql-ktor",            kGraphQLVersion)
     implementation(     "ch.qos.logback",           "logback-classic",          logbackClassicVersion)
     implementation(     "com.viartemev",            "ktor-flyway-feature",      ktorFlywayFeatureVersion)
     implementation(     "com.zaxxer",               "HikariCP",                 hikariCPVersion)
