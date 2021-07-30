@@ -6,7 +6,7 @@ WORKDIR /home/gradle/src
 RUN gradle installDist --no-daemon
 
 FROM adoptopenjdk/openjdk14
-EXPOSE $PORT:8000
+EXPOSE 8000:$PORT
 RUN mkdir /app
 COPY --from=build /home/gradle/src/build/install/budget-creator-ktor/ /app/
 WORKDIR /app/bin
