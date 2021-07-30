@@ -62,6 +62,11 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_14.majorVersion
 }
 
+task("stage").dependsOn("build", "clean")
+tasks.build {
+    mustRunAfter(tasks.clean)
+}
+
 application {
     mainClass.set("io.ktor.server.cio.EngineMain")
 }
