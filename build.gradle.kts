@@ -62,7 +62,13 @@ tasks.withType<KotlinCompile> {
     kotlinOptions.jvmTarget = JavaVersion.VERSION_14.majorVersion
 }
 
-task("stage").dependsOn("build", "clean")
+tasks.test {
+    enabled = false
+}
+
+task("stage")
+    .dependsOn("build", "clean")
+
 tasks.build {
     mustRunAfter(tasks.clean)
 }
