@@ -13,6 +13,10 @@ object BudgetService {
             .findAllByUserId(userId)
     }
 
+    suspend fun getBudgetById(id: Int): BudgetDto? {
+        return budgetRepository.findById(id)
+    }
+
     suspend fun createBudgetForUser(budget: BudgetSubmissionView, userId: Int): BudgetDto {
         return budgetRepository
             .create(budget, userId)

@@ -26,6 +26,7 @@ object GraphQLConfig {
                 expenseSubCategorySchema()
 
                 stringScalar<LocalDate> {
+                    description = "The conversion between string and Kotlin LocalDate"
                     deserialize = { date: String -> date.toLocalDate() }
                     serialize = LocalDate::toString
                 }

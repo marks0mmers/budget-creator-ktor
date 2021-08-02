@@ -25,6 +25,13 @@ object BudgetSchema {
             }
         }
 
+        query("budgetById") {
+            description = "Get Budget by id"
+            resolver { id: Int ->
+                budgetService.getBudgetById(id)
+            }
+        }
+
         mutation("createBudget") {
             description = "Create a new budget"
             resolver { budgetInput: BudgetSubmissionView, userId: Int ->
