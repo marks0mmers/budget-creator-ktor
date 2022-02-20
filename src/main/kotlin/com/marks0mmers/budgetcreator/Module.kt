@@ -13,6 +13,7 @@ import com.marks0mmers.budgetcreator.controllers.UserController.userRoutes
 import com.marks0mmers.budgetcreator.db.DbConfig.dbConfig
 import io.ktor.application.*
 import io.ktor.features.*
+import io.ktor.http.*
 import io.ktor.routing.*
 import kotlinx.coroutines.delay
 import kotlinx.coroutines.launch
@@ -26,6 +27,7 @@ fun Application.module() {
     }
     install(CORS) {
         anyHost()
+        methods.addAll(listOf(HttpMethod.Put, HttpMethod.Delete))
         allowCredentials = true
         allowNonSimpleContentTypes = true
     }

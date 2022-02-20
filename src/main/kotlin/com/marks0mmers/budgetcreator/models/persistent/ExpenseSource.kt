@@ -9,12 +9,15 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 
 class ExpenseSource(id: EntityID<Int>) : IntEntity(id), DtoConvertible<ExpenseSourceDto> {
     object ExpenseSources : IntIdTable("expense_sources") {
         val name = varchar("name", 100)
         val amount = double("amount")
-        val budgetId = reference("budget", Budgets)
+        /** The budget this expense source is attached to */
+        val budgetId = reference("budget", Budgets, onDelete = ReferenceOption.CASCADE)
+        /** The expense category of this expense source */
         val categoryId = reference("expense_category", ExpenseCategories)
         val subCategoryId = reference("expense_sub_category", ExpenseSubCategories).nullable()
     }

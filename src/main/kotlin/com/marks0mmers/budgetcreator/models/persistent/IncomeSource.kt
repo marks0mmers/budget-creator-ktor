@@ -7,12 +7,13 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 
 class IncomeSource(id: EntityID<Int>) : IntEntity(id), DtoConvertible<IncomeSourceDto> {
     object IncomeSources : IntIdTable("income_sources") {
         val name = varchar("name", 50)
         val amount = double("amount")
-        val budgetId = reference("budget_id", Budgets)
+        val budgetId = reference("budget_id", Budgets, onDelete = ReferenceOption.CASCADE)
     }
 
     companion object : IntEntityClass<IncomeSource>(IncomeSources)

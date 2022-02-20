@@ -7,11 +7,12 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.ReferenceOption
 
 class ExpenseSubCategory(id: EntityID<Int>) : IntEntity(id), DtoConvertible<ExpenseSubCategoryDto> {
     object ExpenseSubCategories : IntIdTable("expense_sub_categories") {
         val name = varchar("name", 50)
-        val expenseCategoryId = reference("expense_category_id", ExpenseCategories)
+        val expenseCategoryId = reference("expense_category_id", ExpenseCategories, onDelete = ReferenceOption.CASCADE)
     }
 
     companion object : IntEntityClass<ExpenseSubCategory>(ExpenseSubCategories)
