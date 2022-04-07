@@ -22,4 +22,6 @@ class `1CreateInitial` : CustomMigration(1, "Create Initial") {
             )
         }
     }
+
+    override fun isBaselineMigration() = true
 }

@@ -19,5 +19,7 @@ abstract class CustomMigration(
 
     override fun canExecuteInTransaction() = true
 
+    override fun isBaselineMigration() = false
+
     abstract override fun migrate(context: Context?)
 }

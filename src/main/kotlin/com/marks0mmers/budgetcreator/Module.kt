@@ -15,20 +15,18 @@ import io.ktor.application.*
 import io.ktor.features.*
 import io.ktor.http.*
 import io.ktor.routing.*
-import kotlinx.coroutines.delay
-import kotlinx.coroutines.launch
 import org.slf4j.event.Level
 
 @Suppress("unused")
 fun Application.module() {
     install(DefaultHeaders)
+    install(DoubleReceive)
     install(CallLogging) {
         level = Level.INFO
     }
     install(CORS) {
         anyHost()
         methods.addAll(listOf(HttpMethod.Put, HttpMethod.Delete))
-        allowCredentials = true
         allowNonSimpleContentTypes = true
     }
 
